@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace penCsharpener.DotnetUtils {
     public static class StringExtensions {
@@ -35,6 +36,9 @@ namespace penCsharpener.DotnetUtils {
         /// <param name="delimiter"></param>
         /// <returns></returns>
         public static bool ContainsAllParts(this string str, string partsString, char delimiter) {
+            if (str.IsNullOrEmpty() && !partsString.IsNullOrEmpty()) return false;
+            if (str.IsNullOrEmpty() && partsString.IsNullOrEmpty()) return true;
+
             var parts = partsString.Split(delimiter);
             foreach (var part in parts) {
                 if (!str.Like(part)) {
@@ -44,5 +48,19 @@ namespace penCsharpener.DotnetUtils {
             return true;
         }
 
+        public static bool InIgnoreCase(this string str,
+                                        IEnumerable<string> collection,
+                                        char? containsAllPartsDelimiter = null) {
+            if (containsAllPartsDelimiter.HasValue) {
+                foreach (var part in collection) {
+                    if (str.ContainsAllParts(part, containsAllPartsDelimiter.Value)) return true;
+                }
+            } else {
+                foreach (var part in collection) {
+                    if (str.Like(part)) return true;
+                }
+            }
+            return false;
+        }
     }
 }

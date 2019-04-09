@@ -7,10 +7,16 @@ namespace penCsharpener.DotnetUtils {
 
 
         public static IEnumerable<FileInfo> GetFilesRecursively(this DirectoryInfo dirInfo,
-                                                                string? searchPattern = null
-                                                            /*, string[] ignorePaths = null*/) {
+                                                                string? searchPattern = null,
+                                                                string[]? ignorePaths = null,
+                                                                char? containsPartsDelimiter = null) {
             var files = new List<FileInfo>();
             var dirInfos = new List<DirectoryInfo>();
+
+            if (ignorePaths != null && dirInfo.FullName.InIgnoreCase(ignorePaths, containsPartsDelimiter)) {
+                return files;
+            }
+
             try {
                 if (searchPattern.IsNullOrEmpty()) {
                     files.AddRange(dirInfo.GetFiles());
@@ -21,12 +27,12 @@ namespace penCsharpener.DotnetUtils {
                 }
             } catch (UnauthorizedAccessException) { }
             foreach (var dir in dirInfos) {
-                files.AddRange(dir.GetFilesRecursively(searchPattern));
+                files.AddRange(dir.GetFilesRecursively(searchPattern,
+                                                       ignorePaths: ignorePaths,
+                                                       containsPartsDelimiter: containsPartsDelimiter));
             }
 
             return files;
         }
-
-
     }
 }

@@ -34,11 +34,8 @@ namespace penCsharpener.DotnetUtils.NUnit {
 
         [Test]
         public void ContainsAllPartsTest() {
-            var parts = @"C:\Users\|\AppData\Roaming\Mozilla\Firefox\Profiles\|.default\cache2\entries";
-            var expectFalseParts = @"D:\Software\|\Firefox\Profiles\|\cache2\entries";
-            var testPath = @"C:\Users\MyUsername\AppData\Roaming\Mozilla\Firefox\Profiles\clsow3acld9s.default\cache2\entries";
-            Assert.True(testPath.ContainsAllParts(parts, '|'));
-            Assert.False(testPath.ContainsAllParts(expectFalseParts, '|'));
+            Assert.True(TestConstants.testMozillaPath.ContainsAllParts(TestConstants.partsMozillaPath, '|'));
+            Assert.False(TestConstants.testMozillaPath.ContainsAllParts(TestConstants.expectFalseParts, '|'));
         }
     }
 }

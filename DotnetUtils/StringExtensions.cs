@@ -48,6 +48,14 @@ namespace penCsharpener.DotnetUtils {
             return true;
         }
 
+        /// <summary>
+        /// Checks a string 'str' whether it is contained in a string 'collection'.
+        /// Optionally allows for wildcard in form of a delimiter in path.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="collection"></param>
+        /// <param name="containsAllPartsDelimiter">Represents wildcard with which strings are split.</param>
+        /// <returns></returns>
         public static bool InIgnoreCase(this string str,
                                         IEnumerable<string> collection,
                                         char? containsAllPartsDelimiter = null) {

@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>penCsharpener</RootNamespace>
+    <PackageId>penCsharpener.DotnetUtils</PackageId>
+    <Version>0.1.0.0</Version>
+    <Authors>Matthias Müller (penCsharpener)</Authors>
+    <Product>penCsharpener.DotnetUtils</Product>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <Copyright>@ 2019 Matthias Müller (penCsharpener)</Copyright>
+    <RepositoryUrl>https://github.com/penCsharpener/dotnet-utils</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <LangVersion>8.0</LangVersion>
+    <NullableContextOptions>enable</NullableContextOptions>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="utils-unit-tests\**" />
+    <EmbeddedResource Remove="utils-unit-tests\**" />
+    <None Remove="utils-unit-tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

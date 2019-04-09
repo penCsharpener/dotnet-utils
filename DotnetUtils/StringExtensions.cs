@@ -1,0 +1,48 @@
+﻿using System;
+
+namespace penCsharpener.DotnetUtils {
+    public static class StringExtensions {
+
+        /// <summary>
+        /// same as string.IsNullOrEmpty(str);
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool IsNullOrEmpty(this string? str) {
+            return string.IsNullOrEmpty(str);
+        }
+
+        /// <summary>
+        /// Case insensitive fuzzy filter.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="searchText"></param>
+        /// <returns></returns>
+        public static bool Like(this string? str, string? searchText) {
+            if (str == null && str == searchText) return true;
+            if (str == null) return false;
+            return str.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        /// <summary>
+        /// To avoid nested lists or arrays 'partsString' is split by 'delimiter' and each 
+        /// part is check one by one whether 'str' contains that part.
+        /// To return true all parts must be contained in 'str'. 
+        /// This function is not case sensitive.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="partsString"></param>
+        /// <param name="delimiter"></param>
+        /// <returns></returns>
+        public static bool ContainsAllParts(this string str, string partsString, char delimiter) {
+            var parts = partsString.Split(delimiter);
+            foreach (var part in parts) {
+                if (!str.Like(part)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+    }
+}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
 namespace penCsharpener.DotnetUtils {
@@ -32,6 +33,22 @@ namespace penCsharpener.DotnetUtils {
 
         public static string ToBase64(this byte[] bytes) {
             return Convert.ToBase64String(bytes);
+        }
+
+        public static byte[] Serialize<T>(this T obj) where T : class {
+            var binFormatter = new BinaryFormatter();
+            using (var ms = new MemoryStream()) {
+                binFormatter.Serialize(ms, obj);
+                return ms.ToArray();
+            }
+        }
+
+        public static T? Deserialize<T>(this byte[] bytes) where T : class {
+            using (var ms = new MemoryStream(bytes)) {
+                var binFormatter = new BinaryFormatter();
+                var obj = binFormatter.Deserialize(ms);
+                return obj as T;
+            }
         }
     }
 }

@@ -70,5 +70,10 @@ namespace penCsharpener.DotnetUtils {
             }
             return false;
         }
+
+        public static string ToMySqlDate(this DateTime datetime, bool withSingleQuotes = true) {
+            var singleQuote = withSingleQuotes ? "'" : null;
+            return singleQuote + datetime.ToString("yyyy-MM-dd HH:mm:ss") + singleQuote;
+        }
     }
 }

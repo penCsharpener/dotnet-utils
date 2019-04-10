@@ -75,5 +75,15 @@ namespace penCsharpener.DotnetUtils {
             var singleQuote = withSingleQuotes ? "'" : null;
             return singleQuote + datetime.ToString("yyyy-MM-dd HH:mm:ss") + singleQuote;
         }
+
+        /// <summary>
+        /// source: https://stackoverflow.com/a/271411/6454517
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static string F(this string str, params object[] args) {
+            return string.Format(str, args);
+        }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace penCsharpener.DotnetUtils {
     public static class StringExtensions {
@@ -84,6 +87,121 @@ namespace penCsharpener.DotnetUtils {
         /// <returns></returns>
         public static string F(this string str, params object[] args) {
             return string.Format(str, args);
+        }
+
+        #region https://www.danylkoweb.com/Blog/10-extremely-useful-net-extension-methods-8J
+
+        public static string ToFileSize(this long size) {
+            if (size < 1024) { return (size).ToString("F0") + " bytes"; }
+            if (size < Math.Pow(1024, 2)) { return (size / 1024).ToString("F0") + "KB"; }
+            if (size < Math.Pow(1024, 3)) { return (size / Math.Pow(1024, 2)).ToString("F0") + "MB"; }
+            if (size < Math.Pow(1024, 4)) { return (size / Math.Pow(1024, 3)).ToString("F0") + "GB"; }
+            if (size < Math.Pow(1024, 5)) { return (size / Math.Pow(1024, 4)).ToString("F0") + "TB"; }
+            if (size < Math.Pow(1024, 6)) { return (size / Math.Pow(1024, 5)).ToString("F0") + "PB"; }
+            return (size / Math.Pow(1024, 6)).ToString("F0") + "EB";
+        }
+
+        public static string RemoveLastCharacter(this string instr) {
+            return instr.Substring(0, instr.Length - 1);
+        }
+
+        public static string RemoveLast(this string instr, int number) {
+            return instr.Substring(0, instr.Length - number);
+        }
+
+        public static string RemoveFirstCharacter(this string instr) {
+            return instr.Substring(1);
+        }
+
+        public static string RemoveFirst(this string instr, int number) {
+            return instr.Substring(number);
+        }
+
+        public static Stream ToUTF8Stream(this string str) {
+            byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(str);
+            //byte[] byteArray = Encoding.ASCII.GetBytes(str);
+            return new MemoryStream(byteArray);
+        }
+
+        public static Stream ToStream(this string str, System.Text.Encoding encoding) {
+            byte[] byteArray = encoding.GetBytes(str);
+            return new MemoryStream(byteArray);
+        }
+
+        #endregion
+
+        #region https://dzone.com/articles/5-more-c-extension-methods-for-the-stocking-plus-a
+
+        public static string OrdinalSuffix(this DateTime datetime) {
+            int day = datetime.Day;
+            if (day % 100 >= 11 && day % 100 <= 13)
+                return string.Concat(day, "th");
+            switch (day % 10) {
+                case 1:
+                    return string.Concat(day, "st");
+                case 2:
+                    return string.Concat(day, "nd");
+                case 3:
+                    return string.Concat(day, "rd");
+                default:
+                    return string.Concat(day, "th");
+            }
+        }
+
+        public static string Join<T>(this IEnumerable<T> self, string separator) {
+            return string.Join(separator, self.Where(e => e != null).Select(e => e!.ToString()).ToArray());
+        }
+
+        public static string Join(this Array array, string separator) {
+            return string.Join(separator, array);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// http://extensionmethod.net/5626/csharp/string/camelcasetohumancase
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static IEnumerable<string> SplitCamelCase(this string source) {
+            const string pattern = @"[A-Z][a-z]*|[a-z]+|\d+";
+            var matches = Regex.Matches(source, pattern);
+            foreach (Match match in matches) {
+                yield return match.Value;
+            }
+        }
+
+        /// <summary>
+        /// http://extensionmethod.net/5626/csharp/string/camelcasetohumancase
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static string CamelCaseToHumanCase(this string source) {
+            var words = source.SplitCamelCase();
+            string humanCased = string.Join(" ", words);
+            return humanCased;
+        }
+
+        /// <summary>
+        /// Returns characters from right of specified length
+        /// http://extensionmethod.net/2022/csharp/string/string-extensions
+        /// </summary>
+        /// <param name="value">String value</param>
+        /// <param name="length">Max number of charaters to return</param>
+        /// <returns>Returns string from right</returns>
+        public static string Right(this string value, int length) {
+            return value != null && value.Length > length ? value.Substring(value.Length - length) : value;
+        }
+
+        /// <summary>
+        /// Returns characters from left of specified length
+        /// http://extensionmethod.net/2022/csharp/string/string-extensions
+        /// </summary>
+        /// <param name="value">String value</param>
+        /// <param name="length">Max number of charaters to return</param>
+        /// <returns>Returns string from left</returns>
+        public static string Left(this string value, int length) {
+            return value != null && value.Length > length ? value.Substring(0, length) : value;
         }
     }
 }

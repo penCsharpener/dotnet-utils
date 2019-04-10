@@ -59,5 +59,7 @@ namespace penCsharpener.DotnetUtils {
                 return byteHash.ToHex();
             }
         }
+
+        // potentially useful http://extensionmethod.net/2020/csharp/string/computehash
     }
 }

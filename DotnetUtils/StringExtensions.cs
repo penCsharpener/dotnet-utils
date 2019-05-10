@@ -203,5 +203,25 @@ namespace penCsharpener.DotnetUtils {
         public static string Left(this string value, int length) {
             return value != null && value.Length > length ? value.Substring(0, length) : value;
         }
+
+        /// <summary>
+        /// http://extensionmethod.net/1602/csharp/string/topropercase
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string ToProperCase(this string text) {
+            System.Globalization.CultureInfo cultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture;
+            System.Globalization.TextInfo textInfo = cultureInfo.TextInfo;
+            return textInfo.ToTitleCase(text);
+        }
+
+        /// <summary>
+        /// https://gist.github.com/machupicchubeta/10016121
+        /// </summary>
+        public static string SnakeToPascalCase(this string str) {
+            var snakeParts = str.Split("_".ToArray(), StringSplitOptions.RemoveEmptyEntries);
+            return snakeParts.Select(s => char.ToUpperInvariant(s[0]) + s.Substring(1, s.Length - 1))
+                .Aggregate(string.Empty, (s1, s2) => s1 + s2);
+        }
     }
 }

@@ -37,5 +37,12 @@ namespace penCsharpener.DotnetUtils.NUnit {
             Assert.True(TestConstants.testMozillaPath.ContainsAllParts(TestConstants.partsMozillaPath, '|'));
             Assert.False(TestConstants.testMozillaPath.ContainsAllParts(TestConstants.expectFalseParts, '|'));
         }
+
+        [Test]
+        public void SnakeToPascalCaseTest() {
+            var snakeCase = "some_column_in_table_of_database";
+            var PascalCase = "SomeColumnInTableOfDatabase";
+            Assert.IsTrue(PascalCase == snakeCase.SnakeToPascalCase());
+        }
     }
 }

@@ -223,5 +223,13 @@ namespace penCsharpener.DotnetUtils {
             return snakeParts.Select(s => char.ToUpperInvariant(s[0]) + s.Substring(1, s.Length - 1))
                 .Aggregate(string.Empty, (s1, s2) => s1 + s2);
         }
+
+        public static bool IsNumeric(this string str, out int i) {
+            return int.TryParse(str, out i);
+        }
+
+        public static bool IsNumeric(this string str) {
+            return int.TryParse(str, out int i);
+        }
     }
 }

@@ -1,6 +1,7 @@
 MIT License
 
-Author: Matthias Müller <matthiasmueller@protonmail.com>
+unless otherwise referenced
+Author: Matthias Müller <matthiasmueller@protonmail.com> 
 
 Copyright (c) 2019 Matthias Müller (penCsharpener)
 
